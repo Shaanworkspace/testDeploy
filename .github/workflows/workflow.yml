@@ -1,7 +1,7 @@
 name: Deploy to Oracle Functions
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "master" ]
 
 jobs:
   deploy:
