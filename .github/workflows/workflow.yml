@@ -18,7 +18,6 @@ jobs:
       - name: Build with Maven
         run: mvn clean package -DskipTests
 
-
       - name: Create OCI Config
         run: |
           mkdir -p ~/.oci
@@ -30,7 +29,6 @@ jobs:
           echo "key_file=/home/runner/.oci/oci_api_key.pem" >> ~/.oci/config
           echo "${{ secrets.OCI_CLI_KEY_CONTENT }}" > ~/.oci/oci_api_key.pem
           chmod 600 ~/.oci/oci_api_key.pem
-      # --- FIX END ---
 
       - name: Login to Oracle Registry
         uses: docker/login-action@v2
@@ -47,8 +45,8 @@ jobs:
           fn create context my-context --provider oracle
           fn use context my-context
           fn update context oracle.compartment-id ${{ secrets.OCI_CLI_TENANCY }}
-          fn update context api-url https://functions.${{ secrets.OCI_CLI_REGION }}.oraclecloud.com
-          fn update context registry ${{ secrets.OCIR_REGISTRY }}/${{ secrets.OCIR_USERNAME }}/demo
+          fn update context api-url https://functions.${{ secrets.OCI_CLI_REGION }}.oraclecloud.com 
+          fn update context registry ${{ secrets.OCIR_REGISTRY }}/bmetfsbnvgv0/demo
 
       - name: Deploy
         run: fn deploy --verbose --app Demo
