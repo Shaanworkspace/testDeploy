@@ -10,5 +10,8 @@ RUN mvn clean package -DskipTests
 FROM eclipse-temurin:17-jre-jammy
 WORKDIR /app
 COPY --from=build /app/target/*.jar app.jar
+
+# JVM ko ultra-fast startup ke liye optimize karo
+ENV JAVA_OPTS="-XX:+TieredCompilation -XX:TieredStopAtLevel=1 -Xmx512m"
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "app.jar"]
