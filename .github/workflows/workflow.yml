@@ -18,8 +18,7 @@ jobs:
       - name: Build with Maven
         run: mvn clean package -DskipTests
 
-      # --- FIX START: Manual OCI Config Creation ---
-      # Hum Action use karne ke bajaye khud file bana rahe hain
+
       - name: Create OCI Config
         run: |
           mkdir -p ~/.oci
@@ -49,9 +48,7 @@ jobs:
           fn use context my-context
           fn update context oracle.compartment-id ${{ secrets.OCI_CLI_TENANCY }}
           fn update context api-url https://functions.${{ secrets.OCI_CLI_REGION }}.oraclecloud.com
-          # Yahan dhyan dena: registry URL / namespace / repo-name format sahi hona chahiye
-          fn update context registry ${{ secrets.OCIR_REGISTRY }}/${{ secrets.OCIR_USERNAME }}/demo-repo
+          fn update context registry ${{ secrets.OCIR_REGISTRY }}/${{ secrets.OCIR_USERNAME }}/demo
 
       - name: Deploy
-        # '--app Demo' wahi naam hona chahiye jo OCI console me hai
         run: fn deploy --verbose --app Demo
