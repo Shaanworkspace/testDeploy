@@ -1,8 +1,6 @@
 schema_version: 20180708
 name: spring-test
-version: 0.1.2
+version: 0.1.3
 runtime: docker
-memory: 2048
-timeout: 120
-# Ye line Oracle ko handshake karne mein madad karegi
-format: http
+memory: 256
+timeout: 30

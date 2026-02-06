@@ -1,15 +1,14 @@
-# Stage 1: Build
-FROM maven:3.9.6-eclipse-temurin-17 AS build
-WORKDIR /app
-COPY pom.xml .
-COPY src ./src
-RUN mvn clean package -DskipTests
+FROM fnproject/fn-java-fdk-build:jdk17-1.0.187 as build
+WORKDIR /function
+ENV MAVEN_OPTS=-Dmaven.repo.local=/usr/share/maven/ref/repository
 
-# Stage 2: Run
-FROM eclipse-temurin:17-jre
-WORKDIR /app
-COPY --from=build /app/target/*.jar app.jar
+ADD pom.xml /function/pom.xml
+RUN mvn dependency:go-offline
 
-# Important: Spring Boot ko batana ki wo har IP par listen kare
-EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "app.jar", "--server.port=8080", "--server.address=0.0.0.0"]
+ADD src /function/src
+RUN mvn package
+
+FROM fnproject/fn-java-fdk:jre17-1.0.187
+WORKDIR /function
+COPY --from=build /function/target/*.jar /function/app.jar
+CMD ["com.example.fn.HelloFunction::handleRequest"]
