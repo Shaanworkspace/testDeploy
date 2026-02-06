@@ -1,6 +1,5 @@
 package com.gateway.testdeploy.Controller;
 
-import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
