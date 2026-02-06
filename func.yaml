@@ -1,9 +1,8 @@
 schema_version: 20180708
 name: spring-test
-version: 0.1.0
-runtime: java
-build_image: fnproject/fn-java-fdk-build:jdk17-1.0.187
-run_image: fnproject/fn-java-fdk:jdk17-1.0.187
-cmd: com.gateway.testdeploy.Controller.TaskController::test
-memory: 1024
+version: 0.1.2
+runtime: docker
+memory: 2048
 timeout: 120
+# Ye line Oracle ko handshake karne mein madad karegi
+format: http
