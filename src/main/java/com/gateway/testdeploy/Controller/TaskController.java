@@ -5,11 +5,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/tasks")
 public class TaskController {
-	@GetMapping
+	@GetMapping("/")
+	public String health() {
+		return "ALIVE";
+	}
+
+	@GetMapping("/tasks")
 	public String test() {
 		return "UP UP UP";
 	}
-
 }

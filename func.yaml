@@ -1,10 +1,8 @@
 schema_version: 20180708
 name: spring-test
-version: 0.0.5
+version: 0.0.7
 runtime: docker
 memory: 1024
 timeout: 120
-
+# Ye Oracle ko batayega ki app ek Web Server hai
 format: http
-config:
-  FN_HTTP_PORT: 8080

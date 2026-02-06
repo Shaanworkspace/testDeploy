@@ -1,12 +1,16 @@
-# ... (Build stage same rahegi) ...
+# Step 1: Build Stage
+FROM maven:3.9.6-eclipse-temurin-17 AS build
+WORKDIR /app
+COPY pom.xml .
+COPY src ./src
+RUN mvn clean package -DskipTests
 
+# Step 2: Run Stage
 FROM eclipse-temurin:17-jre-jammy
 WORKDIR /app
+# Yahan humne 'build' stage se jar uthayi hai
 COPY --from=build /app/target/*.jar app.jar
 
-# JVM Flags startup fast karne ke liye
-ENV JAVA_OPTS="-XX:+TieredCompilation -XX:TieredStopAtLevel=1"
-
-# Oracle Functions dynamic port deta hai environment variable 'FN_LISTENER' me
-# Hum Spring Boot ko usi port par bind karenge
-ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -Dserver.port=${FN_LISTENER:-8080} -jar app.jar"]
+# Oracle Functions dynamic port deta hai, hum 8080 use karenge handshake ke liye
+EXPOSE 8080
+ENTRYPOINT ["java", "-jar", "app.jar", "--server.port=8080"]
