@@ -6,6 +6,9 @@ import java.util.List;
 
 @RestController
 public class TaskController {
+	public String test(String input) {
+		return "SUCCESS: UP UP UP";
+	}
 	@GetMapping("/")
 	public String health() {
 		return "ALIVE";
